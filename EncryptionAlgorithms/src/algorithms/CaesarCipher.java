@@ -1,11 +1,11 @@
 package algorithms;
 
-import java.util.Arrays;
 
 public class CaesarCipher {
-	private final String[] lowerAlpha = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K","L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 	private String originString;
 	private int key;
+	private static final int ALPHA_NUMBER = 26;
+	private static final char A = 'A', Z = 'Z', a = 'a', z = 'z';
 	
 	public CaesarCipher(String originString, int key) {
 		super();
@@ -27,20 +27,16 @@ public class CaesarCipher {
 	public void setKey(int key) {
 		this.key = key;
 	}
-	public String[] getLowerAlpha() {
-		return lowerAlpha;
-	}
 	
 	public static String encrypt(String origin, int key) {
 		String encryptContent = "";
 		
 		for (int i = 0; i < origin.length(); i++) {
 			char temp = origin.charAt(i);
-			int charEncrypt = temp + key % 26;
-			if (temp >= 65 && temp <= 90) {
-				encryptContent += calcChar(temp, key, 65, 90);
-			}else if (temp >= 97 && temp <= 122) {
-				encryptContent += calcChar(temp, key, 97, 122);
+			if (temp >= a && temp <= z) {
+				encryptContent += calcChar(temp, key, a);
+			}else if (temp >= A && temp <= Z) {
+				encryptContent += calcChar(temp, key, A);
 			} else {
 				encryptContent += temp;
 			}
@@ -52,13 +48,11 @@ public class CaesarCipher {
 		String decryptContent = "";
 		
 		for (int i = 0; i < origin.length(); i++) {
-			char temp = origin.charAt(i);
-			int charEncrypt = temp - key % 26;
-			
-			if (temp >= 65 && temp <= 90) {
-				decryptContent += calcCharDecrypt(temp, key, 65, 90);
-			}else if (temp >= 97 && temp <= 122) {
-				decryptContent += calcCharDecrypt(temp, key, 97, 122);
+			char temp = origin.charAt(i);			
+			if (temp >= a && temp <= z) {
+				decryptContent += calcCharDecrypt(temp, key, a, z);
+			}else if (temp >= A && temp <= Z) {
+				decryptContent += calcCharDecrypt(temp, key, A, Z);
 			} else {
 				decryptContent += temp;
 			}
@@ -71,11 +65,10 @@ public class CaesarCipher {
 		
 		for (int i = 0; i < originString.length(); i++) {
 			char temp = originString.charAt(i);
-			int charEncrypt = temp + key % 26;
-			if (temp >= 65 && temp <= 90) {
-				encryptContent += calcChar(temp, key, 65, 90);
-			}else if (temp >= 97 && temp <= 122) {
-				encryptContent += calcChar(temp, key, 97, 122);
+			if (temp >= a && temp <= z) {
+				encryptContent += calcChar(temp, key, a);
+			}else if (temp >= A && temp <= Z) {
+				encryptContent += calcChar(temp, key, A);
 			} else {
 				encryptContent += temp;
 			}
@@ -87,13 +80,11 @@ public class CaesarCipher {
 		String decryptContent = "";
 		
 		for (int i = 0; i < originString.length(); i++) {
-			char temp = originString.charAt(i);
-			int charEncrypt = temp - key % 26;
-			
-			if (temp >= 65 && temp <= 90) {
-				decryptContent += calcCharDecrypt(temp, key, 65, 90);
-			}else if (temp >= 97 && temp <= 122) {
-				decryptContent += calcCharDecrypt(temp, key, 97, 122);
+			char temp = originString.charAt(i);			
+			if (temp >= a && temp <= z) {
+				decryptContent += calcCharDecrypt(temp, key, a, z);
+			}else if (temp >= A && temp <= Z) {
+				decryptContent += calcCharDecrypt(temp, key, A, Z);
 			} else {
 				decryptContent += temp;
 			}
@@ -101,31 +92,25 @@ public class CaesarCipher {
 		return decryptContent;
 	}
 	
-	public static char calcChar (int charOrigin, int indexKey, int start, int end) {
-		int charEncrypt = charOrigin + indexKey % 26;
+	public static char calcChar (int charOrigin, int indexKey, int start) {		
+		int charEncrypt = (charOrigin - start + indexKey) % ALPHA_NUMBER;
 
-		if (charEncrypt <= end) {
-			return (char) (charEncrypt);
-		}
-		return (char) (start + (charEncrypt - end - 1));
+		return (char) (start + charEncrypt);
 	}
 	
 	public static char calcCharDecrypt (int charOrigin, int indexKey, int start, int end) {
-		int charDecrypt = charOrigin - indexKey % 26;
+		int charDecrypt = ((charOrigin - start) - (indexKey % ALPHA_NUMBER));
 
-		if (charDecrypt >= start) {
-			return (char) (charDecrypt);
+		if (charDecrypt < 0) {
+			return (char) (end + charDecrypt);
 		}
-		return (char) (end - start + charDecrypt + 1 );
+		return (char) (start + charDecrypt);
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "CaesarCipher";
+		return "CaesarCipher Algorithm";
 	}
-	
-	
-	
 	
 }
