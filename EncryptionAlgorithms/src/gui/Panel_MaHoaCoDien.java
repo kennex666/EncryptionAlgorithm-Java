@@ -314,6 +314,7 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridheight = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
         add(panelConsole, gridBagConstraints);
 
         btnRandom.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -429,8 +430,8 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         int lengthContent = random.nextInt(10) + 7;
         
         txtLoadConsole.setText( txtLoadConsole.getText() + "\n----\n Khởi tạo ngẫu nhiên dữ liệu cho " + thuatToanDangChon);
-        txtLoadConsole.setText( txtLoadConsole.getText() + "\n Độ dài KHOÁ là " + lengthKey );
-        txtLoadConsole.setText( txtLoadConsole.getText() +  "\n Độ dài DỮ LIỆU" + lengthContent );
+        txtLoadConsole.setText( txtLoadConsole.getText() + "\n Độ dài KHOÁ: " + lengthKey );
+        txtLoadConsole.setText( txtLoadConsole.getText() +  "\n Độ dài DỮ LIỆU: " + lengthContent );
         
         switch (thuatToanDangChon) {
             case PLAYFAIR ->{

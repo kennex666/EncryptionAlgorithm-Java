@@ -236,7 +236,7 @@ public class Playfair {
         if (console == null) {
             return;
         }
-        console.setText(console.getText() + "\n\n" + str);
+        console.setText(console.getText() + "\n" + str);
         console.setCaretPosition(console.getText().length());
     }
 

@@ -46,7 +46,6 @@ public class CaesarCipher {
 
     public static void debug(String str) {
         if (console == null) {
-            System.out.println("algorithms.CaesarCipher.debug()");
             return;
         }
         console.setText(console.getText() + "\n" + str);

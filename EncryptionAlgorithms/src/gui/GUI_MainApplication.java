@@ -4,6 +4,7 @@
  */
 package gui;
 
+import application.InfoSoftware;
 import java.awt.Desktop;
 import java.net.URI;
 import java.net.URL;
@@ -36,6 +37,8 @@ public class GUI_MainApplication extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItem_ViewMyProfile = new javax.swing.JMenuItem();
+        menuItem_Info = new javax.swing.JMenuItem();
+        menuItem_Download = new javax.swing.JMenuItem();
         menuItem_XemMaNguon = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -50,6 +53,22 @@ public class GUI_MainApplication extends javax.swing.JFrame {
             }
         });
         jMenu1.add(menuItem_ViewMyProfile);
+
+        menuItem_Info.setText("Thông tin phần mềm");
+        menuItem_Info.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_InfoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItem_Info);
+
+        menuItem_Download.setText("Tải phiên bản mới");
+        menuItem_Download.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItem_DownloadActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItem_Download);
 
         menuItem_XemMaNguon.setText("Xem mã nguồn mở");
         menuItem_XemMaNguon.addActionListener(new java.awt.event.ActionListener() {
@@ -87,6 +106,26 @@ public class GUI_MainApplication extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Không thể mở web do thiếu API Desktop, truy cập tại: https://dtbao.io.vn/?s=JAVA-Encryption-Algorithms");
         }
     }//GEN-LAST:event_menuItem_ViewMyProfileActionPerformed
+
+    private void menuItem_DownloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_DownloadActionPerformed
+        // TODO add your handling code here:
+      
+        try {       
+            URL url = new URL("https://github.com/kennex666/EncryptionAlgorithm-Java/releases/");
+
+            openWebpage(url.toURI());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Không thể mở web do thiếu API Desktop, truy cập tại: https://github.com/kennex666/EncryptionAlgorithm-Java/releases/");
+        }
+    }//GEN-LAST:event_menuItem_DownloadActionPerformed
+
+    private void menuItem_InfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_InfoActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, 
+                "Các thuật toán mã hoá - Phiên bản " + InfoSoftware.VERSION 
+                + "\nViết bởi: Dương Thái Bảo"
+        );
+    }//GEN-LAST:event_menuItem_InfoActionPerformed
 
     public static boolean openWebpage(URI uri) {
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
@@ -140,6 +179,8 @@ public class GUI_MainApplication extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JMenuItem menuItem_Download;
+    private javax.swing.JMenuItem menuItem_Info;
     private javax.swing.JMenuItem menuItem_ViewMyProfile;
     private javax.swing.JMenuItem menuItem_XemMaNguon;
     // End of variables declaration//GEN-END:variables
@@ -148,7 +189,7 @@ public class GUI_MainApplication extends javax.swing.JFrame {
         Panel_MaHoaCoDien panelMaHoaCoDien = new Panel_MaHoaCoDien();
 
         jTabbedPane1.add(panelMaHoaCoDien, "Mã hoá cổ điển");
-        this.setTitle("Các thuật toán mã hoá | (c) Dương Thái Bảo - DHKTPM17B - FIT@IUH");
+        this.setTitle("Các thuật toán mã hoá | " +  InfoSoftware.VERSION + " | (c) Dương Thái Bảo - DHKTPM17B - FIT@IUH");
 
     }
 }

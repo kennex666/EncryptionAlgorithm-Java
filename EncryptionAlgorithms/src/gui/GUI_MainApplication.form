@@ -17,6 +17,22 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_ViewMyProfileActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItem_Info">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Th&#xf4;ng tin ph&#x1ea7;n m&#x1ec1;m"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_InfoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItem_Download">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="T&#x1ea3;i phi&#xea;n b&#x1ea3;n m&#x1edb;i"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_DownloadActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItem_XemMaNguon">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Xem m&#xe3; ngu&#x1ed3;n m&#x1edf;"/>

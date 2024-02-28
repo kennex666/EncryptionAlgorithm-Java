@@ -4,6 +4,7 @@
  */
 package gui;
 
+import application.InfoSoftware;
 import java.time.LocalDate;
 
 
@@ -62,7 +63,7 @@ public class SplashLoading extends javax.swing.JFrame {
         jLabel1.setText("Các thuật toán mã hoá");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Version: 1.0.0");
+        jLabel2.setText("Version: " +  InfoSoftware.VERSION);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("(C) " + LocalDate.now().getYear() +" Dương Thái Bảo (21037621) - DHKTPM17B - FIT@IUH");
