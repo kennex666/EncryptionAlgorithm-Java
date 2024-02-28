@@ -1,116 +1,124 @@
 package algorithms;
 
+import javax.swing.JTextArea;
 
 public class CaesarCipher {
-	private String originString;
-	private int key;
-	private static final int ALPHA_NUMBER = 26;
-	private static final char A = 'A', Z = 'Z', a = 'a', z = 'z';
-	
-	public CaesarCipher(String originString, int key) {
-		super();
-		setOriginString(originString);
-		setKey(key);
-	}
-	public CaesarCipher() {
-		super();
-	}
-	public String getOriginString() {
-		return originString;
-	}
-	public void setOriginString(String originString) {
-		this.originString = originString;
-	}
-	public int getKey() {
-		return key;
-	}
-	public void setKey(int key) {
-		this.key = key;
-	}
-	
-	public static String encrypt(String origin, int key) {
-		String encryptContent = "";
-		
-		for (int i = 0; i < origin.length(); i++) {
-			char temp = origin.charAt(i);
-			if (temp >= a && temp <= z) {
-				encryptContent += calcChar(temp, key, a);
-			}else if (temp >= A && temp <= Z) {
-				encryptContent += calcChar(temp, key, A);
-			} else {
-				encryptContent += temp;
-			}
-		}
-		return encryptContent;
-	}
-	
-	public static String decrypt(String origin, int key) {
-		String decryptContent = "";
-		
-		for (int i = 0; i < origin.length(); i++) {
-			char temp = origin.charAt(i);			
-			if (temp >= a && temp <= z) {
-				decryptContent += calcCharDecrypt(temp, key, a, z);
-			}else if (temp >= A && temp <= Z) {
-				decryptContent += calcCharDecrypt(temp, key, A, Z);
-			} else {
-				decryptContent += temp;
-			}
-		}
-		return decryptContent;
-	}
-	
-	public String encrypt() {
-		String encryptContent = "";
-		
-		for (int i = 0; i < originString.length(); i++) {
-			char temp = originString.charAt(i);
-			if (temp >= a && temp <= z) {
-				encryptContent += calcChar(temp, key, a);
-			}else if (temp >= A && temp <= Z) {
-				encryptContent += calcChar(temp, key, A);
-			} else {
-				encryptContent += temp;
-			}
-		}
-		return encryptContent;
-	}
-	
-	public String decrypt() {
-		String decryptContent = "";
-		
-		for (int i = 0; i < originString.length(); i++) {
-			char temp = originString.charAt(i);			
-			if (temp >= a && temp <= z) {
-				decryptContent += calcCharDecrypt(temp, key, a, z);
-			}else if (temp >= A && temp <= Z) {
-				decryptContent += calcCharDecrypt(temp, key, A, Z);
-			} else {
-				decryptContent += temp;
-			}
-		}
-		return decryptContent;
-	}
-	
-	public static char calcChar (int charOrigin, int indexKey, int start) {		
-		int charEncrypt = (charOrigin - start + indexKey) % ALPHA_NUMBER;
 
-		return (char) (start + charEncrypt);
-	}
-	
-	public static char calcCharDecrypt (int charOrigin, int indexKey, int start, int end) {
-		int charDecrypt = ((charOrigin - start) - (indexKey % ALPHA_NUMBER));
+    private String originString;
+    private int key;
+    private static final int ALPHA_NUMBER = 26;
+    private static final char A = 'A', Z = 'Z', a = 'a', z = 'z';
+    private static JTextArea console;
 
-		if (charDecrypt < 0) {
-			return (char) (end + charDecrypt);
-		}
-		return (char) (start + charDecrypt);
-	}
-	
-	
-	@Override
-	public String toString() {
-		return "CaesarCipher Algorithm";
-	}
-	
+    public CaesarCipher(String originString, int key) {
+        super();
+        setOriginString(originString);
+        setKey(key);
+    }
+
+    public CaesarCipher(String originString, int key, JTextArea console) {
+        super();
+        this.console = console;
+        debug(" ------ \n Khởi tạo thuật toán Caesar Cipher\n ------ \n");
+        setOriginString(originString);
+        setKey(key);
+    }
+
+    public CaesarCipher() {
+        super();
+    }
+
+    public String getOriginString() {
+        return originString;
+    }
+
+    public void setOriginString(String originString) {
+        this.originString = originString;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public static void debug(String str) {
+        if (console == null) {
+            System.out.println("algorithms.CaesarCipher.debug()");
+            return;
+        }
+        console.setText(console.getText() + "\n" + str);
+        console.setCaretPosition(console.getText().length());
+    }
+
+
+
+
+    public String encrypt() {
+        debug("------ \n Quy trình mã hoá \n------ \n" );
+        
+        String encryptContent = "";
+        char convert;
+        for (int i = 0; i < originString.length(); i++) {
+            char temp = originString.charAt(i);
+            if (temp >= a && temp <= z) {
+                convert = calcChar(temp, key, a, z);
+                debug(temp + " -> " + convert);
+                encryptContent += convert;
+            } else if (temp >= A && temp <= Z) {
+                convert = calcChar(temp, key, A, Z);
+                debug(temp + " -> " + convert);
+                encryptContent += convert;
+            } else {
+                debug(temp + " -> " + temp);
+                encryptContent += temp;
+            }
+        }
+        return encryptContent;
+    }
+
+    public String decrypt() {
+        debug("------ \n Quy trình giải mã \n------ \n");
+        String decryptContent = "";
+        char convert;
+        for (int i = 0; i < originString.length(); i++) {
+            char temp = originString.charAt(i);
+            if (temp >= a && temp <= z) {
+                convert = calcCharDecrypt(temp, key, a, z);
+                debug(temp + " -> " + convert);
+                decryptContent += convert;
+            } else if (temp >= A && temp <= Z) {
+                convert = calcCharDecrypt(temp, key, A, Z);
+                debug(temp + " -> " + convert);
+                decryptContent += convert;
+            } else {
+                debug(temp + " -> " + temp);
+                decryptContent += temp;
+            }
+        }
+        return decryptContent;
+    }
+
+    public static char calcChar(int charOrigin, int indexKey, int start, int end) {
+        int charEncrypt = (charOrigin - start + indexKey) % ALPHA_NUMBER;
+
+        return (char) (start + charEncrypt);
+    }
+
+    public static char calcCharDecrypt(int charOrigin, int indexKey, int start, int end) {
+        int charDecrypt = (charOrigin - start - indexKey) % ALPHA_NUMBER;
+
+        if (charDecrypt < 0) {
+            return (char) (end + charDecrypt + 1);
+        }
+        return (char) (start + charDecrypt);
+    }
+
+    @Override
+    public String toString() {
+        return "CaesarCipher Algorithm";
+    }
+
 }

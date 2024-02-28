@@ -4,6 +4,8 @@
  */
 package gui;
 
+import java.time.LocalDate;
+
 
 /**
  *
@@ -63,7 +65,7 @@ public class SplashLoading extends javax.swing.JFrame {
         jLabel2.setText("Version: 1.0.0");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("(C) 2024 Dương Thái Bảo - DHKTPM17B");
+        jLabel3.setText("(C) " + LocalDate.now().getYear() +" Dương Thái Bảo (21037621) - DHKTPM17B - FIT@IUH");
 
         jProgressBar1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
