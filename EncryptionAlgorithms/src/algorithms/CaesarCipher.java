@@ -19,7 +19,7 @@ public class CaesarCipher {
     public CaesarCipher(String originString, int key, JTextArea console) {
         super();
         this.console = console;
-        debug(" ------ \n Khởi tạo thuật toán Caesar Cipher\n ------ \n");
+        debug("------ \nKhởi tạo thuật toán Caesar Cipher\n------ \n");
         setOriginString(originString);
         setKey(key);
     }

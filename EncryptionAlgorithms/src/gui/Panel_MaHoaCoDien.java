@@ -6,6 +6,8 @@ package gui;
 
 import algorithms.CaesarCipher;
 import algorithms.Playfair;
+import algorithms.RailFenceCipher;
+
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.util.Random;
@@ -24,7 +26,8 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
 
     private enum EnumThuatToan {
         CAESAR_CIPHER,
-        PLAYFAIR
+        PLAYFAIR,
+        RAIL_FENCE_CIPHER_ROW
     }
 
     private EnumThuatToan thuatToanDangChon;
@@ -116,7 +119,7 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         add(jLabel2, gridBagConstraints);
 
         cboEncryptAlgo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cboEncryptAlgo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Caesar Cipher", "Playfair" }));
+        cboEncryptAlgo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Caesar Cipher", "Playfair", "Rail Fence Cipher (dùng Độ sâu)" }));
         cboEncryptAlgo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboEncryptAlgoActionPerformed(evt);
@@ -341,6 +344,10 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         lblInput.setText("Bản rõ:");
         lblOutput.setText("Bản mã:");
         btnSubmit.setText("Mã hoá");
+        
+        txtInput.setText(txtOutput.getText());
+        txtOutput.setText("");
+        
         btnSubmit.setForeground(Color.BLUE);
     }//GEN-LAST:event_radEncryptActionPerformed
 
@@ -349,6 +356,9 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         lblInput.setText("Bản mã:");
         lblOutput.setText("Bản rõ:");
         btnSubmit.setText("Giải mã");
+        
+        txtInput.setText(txtOutput.getText());
+        txtOutput.setText("");
 
         btnSubmit.setForeground(Color.RED);
     }//GEN-LAST:event_radDecryptActionPerformed
@@ -361,6 +371,10 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
     private void cboEncryptAlgoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEncryptAlgoActionPerformed
         // TODO add your handling code here:
         switch (cboEncryptAlgo.getSelectedIndex()) {
+
+	        case 2 -> {
+	            thuatToanDangChon = EnumThuatToan.RAIL_FENCE_CIPHER_ROW;
+	        }
             case 1 -> {
                 thuatToanDangChon = EnumThuatToan.PLAYFAIR;
             }
@@ -383,6 +397,24 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         }
 
         switch (thuatToanDangChon) {
+
+	        case RAIL_FENCE_CIPHER_ROW -> {
+	            try {
+	            	keyInt = parseInt(key);
+	                if (keyInt == -1) {
+	                    return;
+	                }
+	                RailFenceCipher rfc = new RailFenceCipher(input, keyInt, txtLoadConsole);
+	                if (radEncrypt.isSelected()) {
+	                    txtOutput.setText(rfc.encrypt());
+	                } else {
+	                    txtOutput.setText(rfc.decrypt());
+	                }
+	            } catch (Exception e) {
+	                JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage());
+	                e.printStackTrace();
+	            }
+	        }
             case PLAYFAIR -> {
                 try {
                     Playfair playFair = new Playfair(input, key, txtLoadConsole);
