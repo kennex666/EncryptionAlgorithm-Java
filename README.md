@@ -14,7 +14,7 @@ Nếu có bất kỳ vấn đề nào, bạn có thể tạo issue hoặc pull r
 Một số giải thuật được viết trong dự án:
  1. Caesar Cipher
  2. Playfair
- 3. [Đang cập nhật thêm...]
+ 3. Rail Fence Cipher
 
 ## Yêu cầu
 - JDK 8 >= 
