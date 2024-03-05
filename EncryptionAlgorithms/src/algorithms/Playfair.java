@@ -172,15 +172,25 @@ public class Playfair {
         for (int i = 0; i < encContent.length(); i = i + 2) {
             char char1 = encContent.charAt(i), char2 = encContent.charAt(i + 1);
             CASE caseChar = analyticsWhat2Char(char1, char2);
+            String temp = "";
             switch (caseChar) {
                 case HAI_KI_TU_CUNG_COT -> {
-                    str += twoCharSameCol_Decrypt(char1, char2);
+                	temp =  twoCharSameCol_Decrypt(char1, char2);
+                    debug(">> 2 ký tự thuộc trường hợp cùng cột, biến đổi -> " +  temp);
+
+                    str += temp;
                 }
                 case HAI_KI_TU_CUNG_HANG -> {
-                    str += twoCharSameRow_Decrypt(char1, char2);
+                	temp = twoCharSameRow_Decrypt(char1, char2);
+                    debug(">> 2 ký tự thuộc trường hợp cùng hàng, biến đổi -> " +  temp);
+
+                    str += temp;
                 }
                 default -> {
-                    str += twoCharInASquare_Decrypt(char1, char2);
+                	temp =  twoCharInASquare_Decrypt(char1, char2);
+                    debug(">> 2 ký tự thuộc trường hợp không cùng cột - không cùng hàng, biến đổi -> " +  temp);
+
+                    str += temp;
                 }
             }
         }
@@ -204,9 +214,11 @@ public class Playfair {
                 strFinal = strFinal.replaceAll("XWX", "XX");
                 continue;
             }
-            if (strFinal.equalsIgnoreCase(strFinal.replaceAll("(.)(X)\\1", "$1$1"))) {
+            if (strFinal.equalsIgnoreCase(strFinal.replaceAll("(.)(X)\\1", "$1$1")) && strFinal.equalsIgnoreCase(strFinal.replaceAll("(.) (X)\\1", "$1$1"))) {
                 break;
             }
+            strFinal = strFinal.replaceAll("(.) (X)\\1", "$1$1");
+
             strFinal = strFinal.replaceAll("(.)(X)\\1", "$1$1");
         }
         return strFinal;
@@ -246,16 +258,30 @@ public class Playfair {
         String str = "", strFinal = "";
         for (int i = 0; i < stringProcess.length(); i = i + 2) {
             char char1 = stringProcess.charAt(i), char2 = stringProcess.charAt(i + 1);
+            debug("* Lấy ký tự " + char1 + " và " + char2);
+
             CASE caseChar = analyticsWhat2Char(char1, char2);
+            String temp = "";
+
+            
             switch (caseChar) {
                 case HAI_KI_TU_CUNG_COT -> {
-                    str += twoCharSameCol_Encrypt(char1, char2);
+                	temp = twoCharSameCol_Encrypt(char1, char2);
+                    debug(">> 2 ký tự thuộc trường hợp cùng cột, biến đổi -> " +  temp);
+
+                    str += temp;
                 }
                 case HAI_KI_TU_CUNG_HANG -> {
-                    str += twoCharSameRow_Encrypt(char1, char2);
+                	temp = twoCharSameRow_Encrypt(char1, char2);
+                    debug(">> 2 ký tự thuộc trường hợp cùng hàng, biến đổi -> " +  temp);
+
+                    str += temp;
                 }
                 default -> {
-                    str += twoCharInASquare_Encrypt(char1, char2);
+                	temp =  twoCharInASquare_Encrypt(char1, char2);
+                    debug(">> 2 ký tự thuộc trường hợp không cùng hàng - không cùng cột, biến đổi -> " + temp);
+
+                    str += temp;
                 }
             }
         }

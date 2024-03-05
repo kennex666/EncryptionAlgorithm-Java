@@ -7,6 +7,7 @@ package gui;
 import algorithms.CaesarCipher;
 import algorithms.Playfair;
 import algorithms.RailFenceCipher;
+import algorithms.RailFenceCipher_String;
 
 import java.awt.Color;
 import java.awt.event.FocusEvent;
@@ -21,13 +22,15 @@ import javax.swing.JTextArea;
  * @author duong
  */
 public class Panel_MaHoaCoDien extends javax.swing.JPanel {
+
     private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     private enum EnumThuatToan {
         CAESAR_CIPHER,
         PLAYFAIR,
-        RAIL_FENCE_CIPHER_ROW
+        RAIL_FENCE_CIPHER_ROW,
+        RAIL_FENCE_CIPHER_KEY
     }
 
     private EnumThuatToan thuatToanDangChon;
@@ -49,10 +52,9 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         txtInput.setLineWrap(true);
         txtOutput.setLineWrap(true);
         btnSubmit.setForeground(Color.BLUE);
-         txtLoadConsole.setText("---\n Khởi động chương trình thành công \n ---"
+        txtLoadConsole.setText("---\n Khởi động chương trình thành công \n ---"
                 + "\nTác giả: Dương Thái Bảo"
                 + "\nXem mã nguồn mở: https://github.com/kennex666/EncryptionAlgorithm-Java");
-
 
     }
 
@@ -119,7 +121,7 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         add(jLabel2, gridBagConstraints);
 
         cboEncryptAlgo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cboEncryptAlgo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Caesar Cipher", "Playfair", "Rail Fence Cipher (dùng Độ sâu)" }));
+        cboEncryptAlgo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Caesar Cipher", "Playfair", "Rail Fence Cipher (dùng Độ sâu)", "Rail Fence Cipher (dùng Khoá)" }));
         cboEncryptAlgo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboEncryptAlgoActionPerformed(evt);
@@ -344,10 +346,12 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         lblInput.setText("Bản rõ:");
         lblOutput.setText("Bản mã:");
         btnSubmit.setText("Mã hoá");
-        
-        txtInput.setText(txtOutput.getText());
-        txtOutput.setText("");
-        
+
+        if (!txtOutput.getText().isBlank()) {
+	        txtInput.setText(txtOutput.getText());
+	        txtOutput.setText("");
+        }
+
         btnSubmit.setForeground(Color.BLUE);
     }//GEN-LAST:event_radEncryptActionPerformed
 
@@ -357,8 +361,10 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         lblOutput.setText("Bản rõ:");
         btnSubmit.setText("Giải mã");
         
-        txtInput.setText(txtOutput.getText());
-        txtOutput.setText("");
+        if (!txtOutput.getText().isBlank()) {
+	        txtInput.setText(txtOutput.getText());
+	        txtOutput.setText("");
+        }
 
         btnSubmit.setForeground(Color.RED);
     }//GEN-LAST:event_radDecryptActionPerformed
@@ -371,10 +377,12 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
     private void cboEncryptAlgoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEncryptAlgoActionPerformed
         // TODO add your handling code here:
         switch (cboEncryptAlgo.getSelectedIndex()) {
-
-	        case 2 -> {
-	            thuatToanDangChon = EnumThuatToan.RAIL_FENCE_CIPHER_ROW;
-	        }
+            case 3 -> {
+                thuatToanDangChon = EnumThuatToan.RAIL_FENCE_CIPHER_KEY;
+            }
+            case 2 -> {
+                thuatToanDangChon = EnumThuatToan.RAIL_FENCE_CIPHER_ROW;
+            }
             case 1 -> {
                 thuatToanDangChon = EnumThuatToan.PLAYFAIR;
             }
@@ -397,24 +405,38 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
         }
 
         switch (thuatToanDangChon) {
+            
+            case RAIL_FENCE_CIPHER_KEY -> {
+                try {
+                    RailFenceCipher_String rfc = new RailFenceCipher_String(input, key, txtLoadConsole);
+                    if (radEncrypt.isSelected()) {
+                        txtOutput.setText(rfc.encrypt());
+                    } else {
+                        txtOutput.setText(rfc.decrypt());
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
 
-	        case RAIL_FENCE_CIPHER_ROW -> {
-	            try {
-	            	keyInt = parseInt(key);
-	                if (keyInt == -1) {
-	                    return;
-	                }
-	                RailFenceCipher rfc = new RailFenceCipher(input, keyInt, txtLoadConsole);
-	                if (radEncrypt.isSelected()) {
-	                    txtOutput.setText(rfc.encrypt());
-	                } else {
-	                    txtOutput.setText(rfc.decrypt());
-	                }
-	            } catch (Exception e) {
-	                JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage());
-	                e.printStackTrace();
-	            }
-	        }
+            case RAIL_FENCE_CIPHER_ROW -> {
+                try {
+                    keyInt = parseInt(key);
+                    if (keyInt == -1) {
+                        return;
+                    }
+                    RailFenceCipher rfc = new RailFenceCipher(input, keyInt, txtLoadConsole);
+                    if (radEncrypt.isSelected()) {
+                        txtOutput.setText(rfc.encrypt());
+                    } else {
+                        txtOutput.setText(rfc.decrypt());
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
             case PLAYFAIR -> {
                 try {
                     Playfair playFair = new Playfair(input, key, txtLoadConsole);
@@ -457,32 +479,30 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
     private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
         // TODO add your handling code here:
         Random random = new Random();
-        
+
         int lengthKey = random.nextInt(5) + 4;
         int lengthContent = random.nextInt(10) + 7;
-        
-        txtLoadConsole.setText( txtLoadConsole.getText() + "\n----\n Khởi tạo ngẫu nhiên dữ liệu cho " + thuatToanDangChon);
-        txtLoadConsole.setText( txtLoadConsole.getText() + "\n Độ dài KHOÁ: " + lengthKey );
-        txtLoadConsole.setText( txtLoadConsole.getText() +  "\n Độ dài DỮ LIỆU: " + lengthContent );
-        
+
+        txtLoadConsole.setText(txtLoadConsole.getText() + "\n----\n Khởi tạo ngẫu nhiên dữ liệu cho " + thuatToanDangChon);
+        txtLoadConsole.setText(txtLoadConsole.getText() + "\n Độ dài KHOÁ: " + lengthKey);
+        txtLoadConsole.setText(txtLoadConsole.getText() + "\n Độ dài DỮ LIỆU: " + lengthContent);
+
         switch (thuatToanDangChon) {
-            case PLAYFAIR ->{
+            case PLAYFAIR, RAIL_FENCE_CIPHER_KEY -> {
                 char[] keyGen = new char[lengthKey];
                 for (int i = 0; i < lengthKey; i++) {
                     keyGen[i] = alphabet.charAt(random.nextInt(alphabet.length()));
                 }
-                
-                
+
                 txtKey.setText(String.valueOf(keyGen));
-                
-                
+
                 char[] contentyGen = new char[lengthContent];
                 for (int i = 0; i < lengthContent; i++) {
                     contentyGen[i] = characters.charAt(random.nextInt(alphabet.length()));
                 }
-                
+
                 txtInput.setText(String.valueOf(contentyGen));
-                
+
             }
             default -> {
                 txtKey.setText(lengthKey + "");
@@ -490,11 +510,11 @@ public class Panel_MaHoaCoDien extends javax.swing.JPanel {
                 for (int i = 0; i < lengthContent; i++) {
                     contentyGen[i] = characters.charAt(random.nextInt(alphabet.length()));
                 }
-                
+
                 txtInput.setText(String.valueOf(contentyGen));
             }
         }
-        
+
     }//GEN-LAST:event_btnRandomActionPerformed
 
     private void btnClearConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearConsoleActionPerformed

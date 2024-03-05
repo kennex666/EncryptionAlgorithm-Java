@@ -80,10 +80,12 @@ public class RailFenceCipher {
 		this.originString = originString;
 		this.key = key;
 		this.console = console;
+        debug("------ \nKhởi tạo thuật toán Rail Fence Cipher (Key số)\n------ \n");
+
 
 		col = key.length();
 
-		row = originString.length() % col + 1;
+		row = (int) Math.ceil((double) originString.length() / col) ;
 
 		tableEnc = new char[col][row];
 
