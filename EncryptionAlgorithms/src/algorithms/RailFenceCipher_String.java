@@ -201,7 +201,7 @@ public class RailFenceCipher_String {
 
 		int maximumLastRow = col - ((row * col - originString.length()) % col) - 1;
 
-		debug("\nƯớc tính số ký tự hàng cuối: " + maximumLastRow + 1);
+		debug("\nƯớc tính số ký tự hàng cuối: " + (maximumLastRow + 1));
 		int countRow = 0;
 
 		for (int j = 0; j < col; j++) {

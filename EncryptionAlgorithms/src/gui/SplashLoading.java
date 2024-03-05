@@ -21,7 +21,7 @@ public class SplashLoading extends javax.swing.JFrame {
         
         
         initComponents();
-        jLabel2.setText("Phiên bản: 1.0");
+        jLabel2.setText("Phiên bản: " + application.InfoSoftware.VERSION);
         
         currentLoadDataString = "Khởi tạo tiến trình";
         jProgressBar1.setStringPainted(true);
