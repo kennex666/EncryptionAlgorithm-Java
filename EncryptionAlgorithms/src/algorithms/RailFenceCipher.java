@@ -144,13 +144,9 @@ public class RailFenceCipher {
 		}
 		debug("Khởi tạo chuỗi cùng độ sâu\n" + temp);
 		
-		indexString = 0;
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				if (indexString == originString.length())
-					break;
-				indexString++;
-				str += tableEnc[j][i];
+				str += ((int)tableEnc[j][i]) <= 0 ? "" : tableEnc[j][i];
 			}
 		}
 		
@@ -180,13 +176,9 @@ public class RailFenceCipher {
 		}
 		debug("Khởi tạo chuỗi cùng độ sâu\n" + temp);
 		
-		indexString = 0;
 		for (int i = 0; i < col; i++) {
 			for (int j = 0; j < row; j++) {
-				if (indexString == originString.length())
-					break;
-				indexString++;
-				str += tableEnc[i][j];
+				str += ((int)tableEnc[i][j]) <= 0 ? "" : tableEnc[i][j];
 			}
 		}
 		
